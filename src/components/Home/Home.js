@@ -1,25 +1,48 @@
 import React, { useEffect, useState } from 'react';
-//import volunteerData from '../../FakeData/VolunteerData';
 import VolunteerDetail from '../VolunteerDetail/VolunteerDetail';
+import loader from '../../Images/loader.gif';
+import background from '../../Images/backgroud.jpg';
+import { Button } from 'react-bootstrap';
 
 const Home = () => {
 
     const [volunteerinfo, setVolunteerinfo] = useState([])
     useEffect(() => {
-       // fetch('https://obscure-everglades-48660.herokuapp.com/events')
         fetch('https://obscure-everglades-48660.herokuapp.com/events')
         .then(res => res.json())
         .then(data => setVolunteerinfo(data))
     },[])
     
     return (
-        <div className="row m-5">
-            <div className="d-flex flex-wrap">
+        <>
+         <div style={{background:`linear-gradient(to bottom,
+                 rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0.95)),
+                 url(${background}) `, height:'496px'}}>
+        <div style={{textAlign:'center', padding:'30px 0'}}>
+                    <h2 style={{margin:'20px'}}>I GROW BY HELPING PEOPLE IN NEED</h2>
+                    
+                        
+                            <input style={{width: "25%", fontSize: "20px", borderTopLeftRadius: '5px',borderBottomLeftRadius: '5px'}}
+                                className='input border border-primary' type="text" placeholder="Search"/>
+                            <button style={{fontSize: "20px", borderLeft: 'none', borderTopRightRadius: '5px',borderBottomRightRadius: '5px'}}
+                                className='text-white bg-primary' type="submit">Search</button>
+                        
+                    
+                </div>
+
+        <div className="container m-auto">
+            <div className="row">
             {
-                volunteerinfo.map(vInfo => <VolunteerDetail key={vInfo._id} volunterinfo={vInfo}></VolunteerDetail> )
+               volunteerinfo.length > 0 ? volunteerinfo.map(vInfo =>
+               
+               <VolunteerDetail key={vInfo._id} volunterinfo={vInfo}></VolunteerDetail> 
+            )
+              : <img style={{width: '50%', margin:"auto"}} src={loader} alt=""/> 
             }
         </div>
         </div>
+        </div>
+        </>
     );
 };
 

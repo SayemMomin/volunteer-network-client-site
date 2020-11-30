@@ -1,4 +1,4 @@
-import React, { createContext, useState } from 'react';
+import React, { createContext, useState, useEffect } from 'react';
 import logo from './logo.svg';
 import './App.css';
 import {
@@ -18,38 +18,43 @@ import VolunteerRegList from './components/VolunteerRegList/VolunteerRegList';
 import EventSelected from './components/EventSelected/EventSelected';
 
 export const UserContext = createContext();
+export const EventContext = createContext();
 function App() {
   const [userLoggedIn, setUserLoggedIn] = useState({})
-  const [work, setWork] = useState({})
+  const [event, setEvent] = useState([])
+  useEffect(() => {
+
+    fetch('https://obscure-everglades-48660.herokuapp.com/events')
+    .then(res => res.json())
+    .then(data => setEvent(data))
+},[])
   return (
-    <UserContext.Provider value={[userLoggedIn, setUserLoggedIn, work, setWork]}>
+    <UserContext.Provider value={[userLoggedIn, setUserLoggedIn]}>
+      <EventContext.Provider value={[event, setEvent]}>
       <Router>
         <Header></Header>
         <Switch>
           <Route exact path="/home">
             <Home></Home>
           </Route>
-          <PrivateRoute exact path="/event">
+          {/* <PrivateRoute exact path="/event">
             <EventSelected></EventSelected>
-          </PrivateRoute>
-          {/* <Route exact  path="/form">
-            <VolunteerForm></VolunteerForm>
-          </Route> */}
-          <PrivateRoute exact path="/selected/:volunteerKey">
+          </PrivateRoute> */}
+          <PrivateRoute exact path="/selected/:id">
             <VolunteerForm></VolunteerForm>
           </PrivateRoute>
-          <PrivateRoute exact path="/selectedOptions/:volunteerKey">
+          {/* <PrivateRoute exact path="/selectedOptions/:volunteerKey">
             <VolunteerSelectedOptions></VolunteerSelectedOptions>
-            </PrivateRoute>
+            </PrivateRoute> */}
           <Route exact path="/login">
             <Login></Login>
           </Route>
           <Route exact path="/regList">
             <VolunteerRegList></VolunteerRegList>
           </Route>
-          <Route exact path="/eventSelected">
+          <PrivateRoute exact path="/eventSelected">
             <EventSelected></EventSelected>
-          </Route>
+          </PrivateRoute>
           <Route exact path="/admin">
             <Admin></Admin>
           </Route>
@@ -58,6 +63,7 @@ function App() {
           </Route>
         </Switch>
       </Router>
+      </EventContext.Provider>
     </UserContext.Provider>
   );
 }

@@ -1,7 +1,12 @@
 import React, { useState, useContext } from 'react';
 import firebaseConfig from './firebase.confiq';
 import { UserContext } from '../../App';
-import { useHistory, useLocation } from 'react-router-dom';
+import { useHistory, useLocation, Link } from 'react-router-dom';
+import { Form, Button } from 'react-bootstrap';
+import logo from '../../Images/logo.png';
+import { FaGoogle } from 'react-icons/fa';
+import { FcGoogle } from 'react-icons/fc';
+import './Login.css'
 var firebase = require('firebase/app');
 require('firebase/auth');
 
@@ -38,15 +43,32 @@ const Login = () => {
             }
             setUser(userSignIn)
             setUserLoggedIn(userSignIn)
-            //storeAuthToken()
             history.replace(from);
             console.log('email ok')
         })
     }
     return (
-        <div className="d-flex justify-content-center">
-            <button onClick={handleGoogleSignIn}>Login with Google</button>
-        </div>
+      <div id= "parent">
+            
+      <img src={logo} alt="" width="150px" />
+          <Form className="login-form" >
+              <h4 style={{ textAlign: "left", paddingBottom: "20px", fontWeight: "bold" }}>Login</h4>
+              <p style={{ color: "red" }}>  </p>
+
+
+              <Button id="sigining-btn" variant="light" onClick={handleGoogleSignIn} >
+                  <FcGoogle style={{ fontSize: "36px" }}/> 
+                  Continue With Facebook
+                </Button>
+                <h6 style={{marginTop:"15px"}}>Dont have an account ?? 
+              <Link to="">
+                      <span>  Create an account</span>
+              </Link>
+              </h6>
+
+          </Form>
+
+      </div>
     );
 };
 

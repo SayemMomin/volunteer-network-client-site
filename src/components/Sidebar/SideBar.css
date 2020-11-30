@@ -1,0 +1,10 @@
+.viewBtn{
+    border:none;
+    background-color:transparent;
+    padding:10px;
+    display:block
+}
+ .viewBtn:focus{
+    color:blue;
+    
+}

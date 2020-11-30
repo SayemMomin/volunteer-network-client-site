@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import VolunteerRegListShow from '../VolunteerRegListShow/VolunteerRegListShow';
 import { useForm } from 'react-hook-form';
+import deleteIcon from '../../Images/trash.png';
+import loader from '../../Images/loader.gif';
 
 
 const VolunteerRegList = () => {
     const [volunteerList, setVolunteerList] = useState([])
     useEffect(() => {
         fetch('https://obscure-everglades-48660.herokuapp.com/volunteerRegList')
-        //fetch('https://boiling-depths-13220.herokuapp.com/products')
         .then(res => res.json())
         .then(data => {
             setVolunteerList(data)
@@ -15,65 +16,57 @@ const VolunteerRegList = () => {
         })
     },[])
 
-    const { register, handleSubmit, watch, errors } = useForm();
-    
-    const onSubmit = data => {
-        //onsole.log('form submitted', data)
-        
-        const newEvent = {volunteerEvent: data}
-  
-      fetch('https://obscure-everglades-48660.herokuapp.com/createEvent', {
-        method: 'POST',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify(newEvent)
-      })
-      .then(res => res.json())
-      .then(data => {
-        if(data){
-          alert('Your ordere successfully')
-        }
-      })
-  
-      };
+    const handleDelete = (event, id) => {
+
+        event.target.parentNode.parentNode.parentNode.style.display="none";
+        fetch(`https://obscure-everglades-48660.herokuapp.com/delete/${id}`, {
+            method: "DELETE"
+        })
+    }
+
 
     return (
-        <div className='container'>
-            <div className="d-flex flex-wrap">
-                <h1>Total Register Volunteer: {volunteerList.length} </h1>
-            {
-                volunteerList.map(list => <VolunteerRegListShow key={list._id} regList={list}></VolunteerRegListShow> )
-            }
+        <div>
+        <div className='container' style={{backgroundColor:"#F4F7FC",padding:"30px"}}>
+           <h4>Volunteer List</h4>
+         <div style={{overflow:"auto", backgroundColor: "white",padding:"20px 5px",}}>
+
+        
+          <table id="activityTable" className="table table-borderless">
+              
+                  <tr>
+                      <th>Name</th>
+                      <th>Email Id</th>
+                      <th>Date</th>
+                      <th>Activity</th>
+                      <th>Action</th>
+                  </tr>
+              
+                  {
+                     volunteerList.length > 0? volunteerList.map(activity=>
+                        <tr>
+                            <td>{activity.name}</td>
+                            <td>{activity.email}</td>
+                            <td>{activity.date}</td>
+                            <td>{activity.title}</td>
+                            <td>
+                                <button onClick={(e)=>handleDelete(e,activity._id)} style={{border:"none"}}>
+                                    <img id="deleteIcon" src={deleteIcon} alt="" width="50%" style={{color:"red"}} />
+                                </button>
+                             </td>
+                        </tr>
+                        
+                        )
+                        : <img style={{width: '100%', margin:"auto"}} src={loader} alt=""/> 
+                  }
+              
+          </table>
+         
+          </div>
             </div>
 
 
-                <h2>Create New Event</h2>
-            <form onSubmit={handleSubmit(onSubmit)}> 
-            <div className="form-group">     
-            
-                <div className=" mb-3">
-                <label htmlFor="validationServer01">Event Title</label>
-                <input type="text" name="name"  className="form-control " id="validationServer01" ref={register({ required: true })}></input>
-                {errors.name && <span className="text-danger">Name is required</span>}
-                <br/>
-
-                <label htmlFor="validationServer01">Date</label>
-                <input type="date" name="date"  className="form-control" id="validationServer01" aria-describedby="emailHelp" ref={register({ required: true })}></input>
-                {errors.date && <span className="text-danger">Date is required</span>}
-                <br/>
-
-                <div className=" mb-3">
-                <label htmlFor="validationServer02">Description</label>
-                <input type="text" name="description" className="form-control" id="validationServer02" ref={register({ required: true })}></input>
-                {errors.description && <span className="text-danger">Description is required</span>}
-                </div>
-                <div className=" mb-3">
                 
-                <input type="submit" value="Create A New Event"  className="form-control btn btn-primary" id="validationServer03" aria-describedby="validationServer03Feedback" ></input>
-                
-                </div>               
-            </div> 
-            </div>
-            </form>
 
         </div>
     );

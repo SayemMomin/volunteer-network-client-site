@@ -1,27 +1,22 @@
 import React from 'react';
 import { Link, useHistory } from 'react-router-dom';
-import VolunteerForm from '../VolunteerForm/VolunteerForm';
 
 const VolunteerDetail = (props) => {
     //console.log(props.volunterinfo);
     const volunterinfo = props.volunterinfo
     const{img, title, moderator, id} = volunterinfo;
 
-    const history = useHistory()
-    const handleVolunteerSubmit = (id) => {
-        history.push(`/selected/${id}`)
-    }
-    return (
-        <div className="">
-            <div className="card container ml-1 mb-1" style={{width: '18rem'}}>
-            <img src={img} className="card-img-top" alt="..."></img>
-            <div className="card-body">
-            <h5 className="card-title">{title} </h5>
-                <button onClick={() => handleVolunteerSubmit(id)}  className="btn btn-primary">{title} </button>
-            </div>
-            </div>
 
-            
+    let colors=['#3F90FC','#FFBD3E','#FF7044', '#cc6fb5e0'];
+    const random = Math.floor(Math.random()*4)
+    return (
+        <div className="col-lg-3 col-md-4 col-sm-6 text-center">
+            <Link to={`/selected/${id}`} style={{textDecorationStyle: 'none'}}>
+            <div className="mb-3" style={{width: '100%'}}>
+                <img src={img} alt="" className="img-fluid" />
+                <h5 style={{background:colors[random], hover: 'none', paddingTop:"15px", height:"70px",position:"relative",  marginTop: "-6px", color:"white"}}>{title} </h5>
+            </div>
+            </Link>
         </div>
     );
 };
