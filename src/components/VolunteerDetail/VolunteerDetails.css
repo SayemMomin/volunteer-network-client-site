@@ -1,0 +1,11 @@
+.eventsStyle{
+    padding-top: 15px;
+    height:70px;
+    position:relative; 
+    margin-top: -6px;
+    color:white 
+    
+}
+a:hover {
+    text-decoration: none;
+  }

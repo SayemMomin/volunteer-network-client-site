@@ -1,17 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import VolunteerDetail from '../VolunteerDetail/VolunteerDetail';
 import loader from '../../Images/loader.gif';
 import background from '../../Images/backgroud.jpg';
 import { Button } from 'react-bootstrap';
+import { EventContext } from '../../App';
 
 const Home = () => {
 
-    const [volunteerinfo, setVolunteerinfo] = useState([])
-    useEffect(() => {
-        fetch('https://obscure-everglades-48660.herokuapp.com/events')
-        .then(res => res.json())
-        .then(data => setVolunteerinfo(data))
-    },[])
+    const [volunteerinfo] = useContext(EventContext)
     
     return (
         <>
@@ -32,8 +28,8 @@ const Home = () => {
 
         <div className="container m-auto">
             <div className="row">
-            {
-               volunteerinfo.length > 0 ? volunteerinfo.map(vInfo =>
+            { volunteerinfo.length > 0 ?
+               volunteerinfo.map(vInfo =>
                
                <VolunteerDetail key={vInfo._id} volunterinfo={vInfo}></VolunteerDetail> 
             )

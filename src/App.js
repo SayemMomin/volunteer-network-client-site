@@ -12,7 +12,6 @@ import Login from './components/Login/Login';
 import Header from './components/Header/Header';
 import PrivateRoute from './components/PrivateRoute/PrivateRoute';
 import VolunteerForm from './components/VolunteerForm/VolunteerForm';
-import VolunteerSelectedOptions from './components/VolunteerSelectedOptions/VolunteerSelectedOptions';
 import Admin from './components/Admin/Admin';
 import VolunteerRegList from './components/VolunteerRegList/VolunteerRegList';
 import EventSelected from './components/EventSelected/EventSelected';
@@ -23,7 +22,6 @@ function App() {
   const [userLoggedIn, setUserLoggedIn] = useState({})
   const [event, setEvent] = useState([])
   useEffect(() => {
-
     fetch('https://obscure-everglades-48660.herokuapp.com/events')
     .then(res => res.json())
     .then(data => setEvent(data))
@@ -37,15 +35,9 @@ function App() {
           <Route exact path="/home">
             <Home></Home>
           </Route>
-          {/* <PrivateRoute exact path="/event">
-            <EventSelected></EventSelected>
-          </PrivateRoute> */}
           <PrivateRoute exact path="/selected/:id">
             <VolunteerForm></VolunteerForm>
           </PrivateRoute>
-          {/* <PrivateRoute exact path="/selectedOptions/:volunteerKey">
-            <VolunteerSelectedOptions></VolunteerSelectedOptions>
-            </PrivateRoute> */}
           <Route exact path="/login">
             <Login></Login>
           </Route>

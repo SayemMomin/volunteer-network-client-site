@@ -1,6 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import VolunteerRegListShow from '../VolunteerRegListShow/VolunteerRegListShow';
-import { useForm } from 'react-hook-form';
 import deleteIcon from '../../Images/trash.png';
 import loader from '../../Images/loader.gif';
 

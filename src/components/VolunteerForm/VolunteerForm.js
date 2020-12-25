@@ -11,17 +11,9 @@ const VolunteerForm = () => {
     const history = useHistory()
     let today = new Date().toISOString().substr(0, 10);
 
-//     const [event, setEvent] = useState([])
-//     useEffect(() => {
-  
-//       fetch('https://obscure-everglades-48660.herokuapp.com/events')
-//       .then(res => res.json())
-//       .then(data => setEvent(data))
-//   },[])
 const [event, setEvent] = useContext(EventContext)
   console.log(event);
     const selectedItem = event.filter(e => e.id == id)
-    // console.log(selectedItem[0].title);
 
     const [loggedInUser] = useContext(UserContext);
     const { register, handleSubmit, watch, errors } = useForm();
